@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        python 'Python3.12'
+    }
+
     stages {
         stage("Clone") {
             steps {
@@ -8,9 +12,9 @@ pipeline {
             }
         }
 
-        stage ("Install python"){
+        stage ("Verifier python"){
             steps {
-                sh 'winget install --id Python.Python.3.12 -e --source winget && python --version'
+                sh 'python --version'
             }
         }
 
