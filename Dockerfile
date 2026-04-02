@@ -8,6 +8,4 @@ RUN pip install -r require.txt
 
 COPY . .
 
-CMD ["uvicorn", "app:app"]
-
-CMD ["mlflow", "ui"]
+CMD ["uvicorn", "src.app:app"]
