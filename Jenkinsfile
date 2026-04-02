@@ -16,7 +16,7 @@ pipeline {
 
         stage("Environnement python"){
             steps {
-                sh 'C:\\Users\\rasolonjanahary\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv'
+                bat 'C:\\Users\\rasolonjanahary\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv'
                 sh 'source venv/Scripts/activate && pip install -r require.txt'
             }
         }
