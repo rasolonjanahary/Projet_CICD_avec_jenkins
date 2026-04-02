@@ -1,0 +1,7 @@
+pour lancer mlflow:
+
+mlflow ui
+
+pour lancer fastapi:
+
+uvicorn app:app
