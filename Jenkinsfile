@@ -10,26 +10,39 @@ pipeline {
 
         stage ("Install python"){
             steps {
-                sh 'winget install Python.Python.3.12'
+                sh '''
+                    sudo apt update
+                    sudo apt install -y python3 python3-pip python3-venv
+                '''
             }
         }
 
         stage("Environnement python"){
             steps {
-                sh 'python -m venv venv'
-                sh 'source venv/Scripts/activate && pip install -r require.txt'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r require.txt
+                '''
             }
         }
 
         stage("Run training") {
             steps {
-                sh 'source venv/Scripts/activate && python notebook/train.py'
+                sh '''
+                . venv/bin/activate
+                python notebook/train.py
+                '''
             }
         }
 
         stage("Run testing") {
             steps {
-                sh 'source venv/Scripts/activate && python notebook/test.py'
+                sh '''
+                . venv/bin/activate
+                python notebook/test.py
+                '''
             }
         }
 
