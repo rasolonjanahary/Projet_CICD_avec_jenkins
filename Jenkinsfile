@@ -8,6 +8,12 @@ pipeline {
             }
         }
 
+        stage ("Install python"){
+            steps {
+                sh 'winget install Python.Python.3.12'
+            }
+        }
+
         stage("Environnement python"){
             steps {
                 sh 'python -m venv venv'
