@@ -18,8 +18,11 @@ class WiForm(BaseModel):
     alcohol             :float 
     type                :int
 
-model = joblib.load("../models/model_dc.pkl")
-sc = joblib.load("../models/scaler1.pkl")
+model = joblib.load("models/model_dc.pkl")
+sc = joblib.load("models/scaler1.pkl")
+
+# model = joblib.load("../models/model_dc.pkl")
+# sc = joblib.load("../models/scaler1.pkl")
 
 @app.get("/")
 def home():

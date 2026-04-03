@@ -35,7 +35,7 @@ pipeline {
 
         stage("Build") {
             steps {
-                sh 'docker buid -t wine_fraud_image .'
+                sh 'docker build -t wine_fraud_image . && docker images && docker ps'
             }
         }
     } 
