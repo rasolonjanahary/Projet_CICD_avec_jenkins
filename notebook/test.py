@@ -1,8 +1,12 @@
 import pandas as pd
 import joblib
 
-model = joblib.load("../models/model_dc.pkl")
-sc = joblib.load("../models/scaler1.pkl")
+model = joblib.load("models/model_dc.pkl")
+#model = joblib.load("../models/model_dc.pkl")
+
+sc = joblib.load("models/scaler1.pkl")
+#sc = joblib.load("../models/scaler1.pkl")
+
 
 dic = {
   "fixed_acidity": 7.3,

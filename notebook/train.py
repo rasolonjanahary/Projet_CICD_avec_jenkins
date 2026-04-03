@@ -9,7 +9,9 @@ from sklearn.compose import ColumnTransformer
 
 mlflow.set_experiment("wine")
 
-df = pd.read_csv("../data/wine_equilibre.csv")
+df = pd.read_csv("data/wine_equilibre.csv")
+#df = pd.read_csv("../data/wine_equilibre.csv")
+
 
 df = df.rename(columns={
     "fixed acidity":"fixed_acidity",
