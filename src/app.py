@@ -6,6 +6,8 @@ from fastapi import Request
 from pydantic import BaseModel
 import pandas as pd
 import joblib
+import os
+
 app = FastAPI()
 
 class WiForm(BaseModel):
@@ -28,7 +30,10 @@ sc = joblib.load("models/scaler1.pkl")
 # model = joblib.load("../models/model_dc.pkl")
 # sc = joblib.load("../models/scaler1.pkl")
 
-templates = Jinja2Templates(directory="templates")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
