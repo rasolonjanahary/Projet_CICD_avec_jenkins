@@ -8,4 +8,6 @@ RUN pip install -r require.txt
 
 COPY . .
 
+EXPOSE 8000
+
 CMD ["uvicorn", "src.app:app"]
