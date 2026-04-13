@@ -5,6 +5,9 @@ from sklearn.datasets import load_iris
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.compose import ColumnTransformer
 
 mlflow.set_experiment("wine")
@@ -41,14 +44,42 @@ X_scaled = preprocessor.fit_transform(X)
 
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y)
 
-model = RandomForestClassifier()
+model_rfc = RandomForestClassifier()
+model_dtc = DecisionTreeClassifier()
+model_lr = LogisticRegression()
+model_svc = SVC()
+
+accuracie = []
 
 with mlflow.start_run():
-    model.fit(X_train, y_train)
-    acc = model.score(X_test, y_test)
+    # Random forest classifier
+    model_rfc.fit(X_train, y_train)
+    acc = model_rfc.score(X_test, y_test)
+    mlflow.log_metric("accuracy rfc", acc)
+    mlflow.sklearn.log_model(model_rfc, "model_rfc")
+    accuracie.append(acc)
 
-    mlflow.log_metric("accuracy", acc)
-    mlflow.sklearn.log_model(model, "model")
+    # Decision tree classifier
+    model_dtc.fit(X_train, y_train)
+    acc_dtc = model_dtc.score(X_test, y_test)
+    mlflow.log_metric("accuracy dtc", acc_dtc)
+    mlflow.sklearn.log_model(model_dtc, "model_dtc")
+    accuracie.append(acc_dtc)
+
+    # Logistic regression
+    model_lr.fit(X_train, y_train)
+    acc_lr = model_lr.score(X_test, y_test)
+    mlflow.log_metric("accuracy lr", acc_lr)
+    mlflow.sklearn.log_model(model_lr, "model_lr")
+    accuracie.append(acc_lr)
+
+    # svc
+    model_svc.fit(X_train, y_train)
+    acc_svc = model_svc.score(X_test, y_test)
+    mlflow.log_metric("accuracy svc", acc_svc)
+    mlflow.sklearn.log_model(model_svc, "model_svc")
+    accuracie.append(acc_svc)
+
     mlflow.sklearn.log_model(preprocessor, "preprocessor")
 
-    print("Accuracy:", acc)
+    print("Accuracy:", accuracie)
