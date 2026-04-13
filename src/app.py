@@ -1,4 +1,8 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
 from pydantic import BaseModel
 import pandas as pd
 import joblib
@@ -24,7 +28,13 @@ sc = joblib.load("models/scaler1.pkl")
 # model = joblib.load("../models/model_dc.pkl")
 # sc = joblib.load("../models/scaler1.pkl")
 
-@app.get("/")
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/api")
 def home():
     return {"message": "API OK"}
 
