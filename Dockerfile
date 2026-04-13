@@ -10,8 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-EXPOSE 5000
-
-RUN chmod +x start.sh
-
-CMD ["./start.sh"]
+CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]

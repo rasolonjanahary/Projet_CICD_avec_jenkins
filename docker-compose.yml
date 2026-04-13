@@ -1,0 +1,17 @@
+services:
+  wine-fraud-app:
+    build: .
+    image: wine_fraud_image
+    container_name: wine_fraud_container
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  mlflow-ui:
+    build: .
+    image: wine_fraud_flow
+    container_name: wine_fraud_container_flow
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    command: ["mlflow", "ui", "--host", "0.0.0.0", "--port", "5000"]

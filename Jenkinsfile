@@ -35,7 +35,7 @@ pipeline {
 
         stage("Build") {
             steps {
-                sh 'docker build -t wine_fraud_image . && docker run -d -p 8000:8000 wine_fraud_image && docker images && docker ps'
+                sh 'docker compose up -d --build && docker images && docker ps'
             }
         }
     } 
