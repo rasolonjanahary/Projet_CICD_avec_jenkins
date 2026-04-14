@@ -53,14 +53,16 @@ pipeline {
                     usernameVariable: 'USERNAME',
                     passwordVariable: 'PASSWORD'
                 )]) {
-                    sh "docker login -u $USERNAME -p $PASSWORD ${REGISTRY}"
+                    sh '''
+                    echo $PASSWORD | docker login -u $USERNAME --password-stdin 192.168.88.50
+                    '''
                 }
             }
         }
 
         stage('Push Image to Harbor') {
             steps {
-                sh "docker push ${REGISTRY}/${PROJECT}/${IMAGE_NAME}:${TAG}"
+                sh "docker push ${REGISTRY}/${PROJECT}/${IMAGE_NAME}"
             }
         }
     } 
