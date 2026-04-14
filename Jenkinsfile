@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        REGISTRY = "192.168.88.50"
+        PROJECT = "projet_cicd"
+        IMAGE_NAME = "wine_fraud_image"
+        TAG = "latest"
+    }
+
     stages {
         stage("Clone") {
             steps {
@@ -36,6 +43,24 @@ pipeline {
         stage("Build") {
             steps {
                 sh 'docker compose up -d --build && docker images && docker ps'
+            }
+        }
+
+        stage('Login to Harbor') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'harbor-creds',
+                    usernameVariable: 'USERNAME',
+                    passwordVariable: 'PASSWORD'
+                )]) {
+                    sh "docker login -u $USERNAME -p $PASSWORD ${REGISTRY}"
+                }
+            }
+        }
+
+        stage('Push Image to Harbor') {
+            steps {
+                sh "docker push ${REGISTRY}/${PROJECT}/${IMAGE_NAME}:${TAG}"
             }
         }
     } 
