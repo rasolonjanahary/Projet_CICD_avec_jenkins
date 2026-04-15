@@ -77,6 +77,11 @@ pipeline {
         //         sh "docker push ${REGISTRY}/${PROJECT}/${IMAGE_NAME}"
         //     }
         // }
+        stage('Tag image') {
+            steps {
+                sh "docker tag wine_fraud_image ${USERNAME}/${IMAGE_NAME}:latest"
+            }
+        }
         stage('Push Image to Docker Hub') {
             steps {
                 sh "docker push ${USERNAME}/${IMAGE_NAME}:latest"
