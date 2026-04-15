@@ -2,10 +2,11 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = "192.168.88.50"
-        PROJECT = "projet_cicd"
-        IMAGE_NAME = "wine_fraud_image"
-        TAG = "latest"
+        REGISTRY = "192.168.88.50",
+        PROJECT = "projet_cicd",
+        IMAGE_NAME = "wine_fraud_image",
+        USERNAME = "rasolonjanahary"
+        TAG = "latest",
     }
 
     stages {
@@ -46,23 +47,41 @@ pipeline {
             }
         }
 
-        stage('Login to Harbor') {
+        // stage('Login to Harbor') {
+        //     steps {
+        //         withCredentials([usernamePassword(
+        //             credentialsId: 'harbor-creds',
+        //             usernameVariable: 'USERNAME',
+        //             passwordVariable: 'PASSWORD'
+        //         )]) {
+        //             sh '''
+        //             echo $PASSWORD | docker login -u $USERNAME --password-stdin 192.168.88.50
+        //             '''
+        //         }
+        //     }
+        // }
+        stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(
-                    credentialsId: 'harbor-creds',
+                    credentialsId: 'dockerhub-creds',
                     usernameVariable: 'USERNAME',
                     passwordVariable: 'PASSWORD'
                 )]) {
                     sh '''
-                    echo $PASSWORD | docker login -u $USERNAME --password-stdin 192.168.88.50
+                    echo $PASSWORD | docker login -u $USERNAME --password-stdin
                     '''
                 }
             }
         }
 
-        stage('Push Image to Harbor') {
+        // stage('Push Image to Harbor') {
+        //     steps {
+        //         sh "docker push ${REGISTRY}/${PROJECT}/${IMAGE_NAME}"
+        //     }
+        // }
+        stage('Push Image to Docker Hub') {
             steps {
-                sh "docker push ${REGISTRY}/${PROJECT}/${IMAGE_NAME}"
+                sh "docker push ${USERNAME}/${IMAGE_NAME}:latest"
             }
         }
     } 
