@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = "192.168.88.50"
-        PROJECT = "projet_cicd"
         IMAGE_NAME = "wine_fraud_image"
         USERNAME = "rasolonjanahary"
         TAG = "latest"
