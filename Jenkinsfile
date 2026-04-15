@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "wine_fraud_image"
-        USERNAME = "rasolonjanahary"
+        DOCKER_USER = "rasolonjanahary"
         TAG = "latest"
     }
 
@@ -79,12 +79,12 @@ pipeline {
         // }
         stage('Tag image') {
             steps {
-                sh "docker tag wine_fraud_image ${USERNAME}/${IMAGE_NAME}:latest"
+                sh "docker tag wine_fraud_image ${DOCKER_USER}/${IMAGE_NAME}:latest"
             }
         }
         stage('Push Image to Docker Hub') {
             steps {
-                sh "docker push ${USERNAME}/${IMAGE_NAME}:latest"
+                sh "docker push ${DOCKER_USER}/${IMAGE_NAME}:latest"
             }
         }
     } 
